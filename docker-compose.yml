@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: hr_assistant
+      POSTGRES_USER: hr_app
+      POSTGRES_PASSWORD: hr_app
+    ports: ["${POSTGRES_PORT:-5432}:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hr_app -d hr_assistant"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+  redis:
+    image: redis:7-alpine
+    ports: ["${REDIS_PORT:-6379}:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  api:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://hr_app:hr_app@postgres:5432/hr_assistant
+      REDIS_URL: redis://redis:6379/0
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      AGENT_MODEL: ${AGENT_MODEL:-}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-}
+      EMBEDDING_DIMENSIONS: ${EMBEDDING_DIMENSIONS:-1536}
+      POLICY_INDEX_VERSION: ${POLICY_INDEX_VERSION:-policies-2026-01}
+    ports: ["${API_PORT:-8000}:8000"]
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+  streamlit:
+    build: .
+    command: ["streamlit", "run", "app.py", "--server.address", "0.0.0.0"]
+    environment:
+      API_URL: http://api:8000
+    ports: ["${STREAMLIT_PORT:-8501}:8501"]
+    depends_on: [api]
+volumes:
+  postgres_data:

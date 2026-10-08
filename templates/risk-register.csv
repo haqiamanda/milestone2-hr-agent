@@ -1,0 +1,10 @@
+risk_id,component,risk,impact,likelihood,control,evidence,owner,status
+R-001,RAG,Hallucinated policy,High,Medium,Citation validator and abstention,,AI Engineer,Open
+R-002,Retrieval,Stale policy version,High,Medium,Version metadata and reindex procedure,,HR Operations,Open
+R-003,Agent,Prompt injection,High,Medium,Untrusted-context prompt and allow-listed tools,,Security,Open
+R-004,Authorization,Cross-employee access,Critical,Medium,Identity-bound repository methods,,Backend Engineer,Open
+R-005,Telemetry,PII leakage,Critical,Medium,Redaction before persistence,,Privacy Officer,Open
+R-006,Action,Unauthorized leave approval,Critical,Low,Pending-only schema and human review,,HR Operations,Open
+R-007,Provider,Outage or rate limit,Medium,Medium,Bounded retry and safe fallback,,AI Platform,Open
+R-008,Performance,Latency spike,Medium,Medium,Hybrid query tuning and Redis cache,,AI Platform,Open
+R-009,Cost,Unexpected token spend,Medium,Medium,Budgets telemetry and configured rates,,Product Owner,Open

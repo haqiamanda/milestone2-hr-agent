@@ -1,0 +1,23 @@
+[
+  {
+    "employee_id": "EMP-001",
+    "display_name": "Alya Pratama",
+    "role": "employee",
+    "token": "token-alya",
+    "balances": {"annual": 8, "sick": 10, "parental": 60}
+  },
+  {
+    "employee_id": "EMP-002",
+    "display_name": "Bima Santoso",
+    "role": "employee",
+    "token": "token-bima",
+    "balances": {"annual": 3, "sick": 10, "parental": 60}
+  },
+  {
+    "employee_id": "ADM-001",
+    "display_name": "Monitoring Admin",
+    "role": "monitoring_admin",
+    "token": "token-admin",
+    "balances": {}
+  }
+]

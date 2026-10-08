@@ -1,0 +1,4 @@
+[
+  {"rule_id":"agent-error-spike","metric":"error_rate","operator":"gt","threshold":0.2,"minimum_samples":5,"owner":"AI Platform","response":"Inspect redacted traces and provider health; disable mutating tools if errors persist."},
+  {"rule_id":"agent-latency-p95","metric":"p95_latency_ms","operator":"gt","threshold":8000,"minimum_samples":5,"owner":"AI Platform","response":"Inspect provider latency, retrieval cache, and database query timing."}
+]

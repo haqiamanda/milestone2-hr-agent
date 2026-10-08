@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["live: requires a running API and live OpenAI credentials"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
