@@ -2,7 +2,10 @@
 pythonpath = ["."]
 testpaths = ["tests"]
 addopts = "-ra"
-markers = ["live: requires a running API and live OpenAI credentials"]
+markers = [
+    "live: requires a running API and live OpenAI credentials",
+    "postgres_integration: requires a disposable PostgreSQL container",
+]
 
 [tool.ruff]
 line-length = 100

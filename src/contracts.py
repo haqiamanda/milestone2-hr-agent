@@ -40,6 +40,14 @@ class Citation(BaseModel):
     excerpt: str
 
 
+class RetrievedSource(BaseModel):
+    rank: int = Field(ge=1)
+    chunk_id: str
+    document_id: str
+    version: str
+    effective_date: date
+
+
 class ToolCallSummary(BaseModel):
     name: str
     status: Literal["ok", "blocked", "error"]
@@ -70,6 +78,7 @@ class ChatResponse(BaseModel):
     answer: str
     outcome: Outcome
     citations: list[Citation] = Field(default_factory=list)
+    retrieved_sources: list[RetrievedSource] | None = None
     tool_calls: list[ToolCallSummary] = Field(default_factory=list)
     action_proposal: ActionProposal | None = None
     trace_id: str

@@ -1,8 +1,46 @@
-.env
-.venv/
-__pycache__/
-.pytest_cache/
-*.py[cod]
-outputs/*.json
-outputs/*.md
+# Local credentials; keep the sanitized configuration template.
+.env*
+!.env.example
 .streamlit/secrets.toml
+
+# Dependencies and interpreter/test caches (at any depth).
+node_modules/
+_pdf_tools/
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+
+# Rebuildable local outputs; final deliverables and evidence stay eligible.
+/outputs/
+/presentation/.build/
+/.presentation-validation/
+*.inspect.ndjson
+*.tmp
+*.temp
+~$*
+
+# Logs, local databases and dumps; do not blanket-ignore SQL migrations.
+*.log
+*.db
+*.sqlite*
+*.dump
+*.backup
+*.sql.gz
+*_dump.sql
+dump.rdb
+*.aof
+appendonlydir/
+
+# Reviewed, sanitized submission logs are intentional deliverables.
+!docs/submission_evidence/artifacts/**/*.log
+!docs/submission_evidence/artifacts/*.log

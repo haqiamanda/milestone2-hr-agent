@@ -23,7 +23,7 @@ services:
   api:
     build: .
     environment:
-      DATABASE_URL: postgresql://hr_app:hr_app@postgres:5432/hr_assistant
+      DATABASE_URL: ${DATABASE_URL:-postgresql://hr_app:hr_app@postgres:5432/hr_assistant}
       REDIS_URL: redis://redis:6379/0
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}

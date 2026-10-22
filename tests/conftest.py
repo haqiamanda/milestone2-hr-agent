@@ -14,6 +14,7 @@ from src.providers import DeterministicProvider
 from src.repository import MemoryRepository
 from src.retrieval import RetrievalService
 from src.tools import ToolExecutor
+from tests.postgres_fixture import postgres_database
 
 
 @pytest.fixture
@@ -61,4 +62,3 @@ def client(repository: MemoryRepository, settings: Settings) -> TestClient:
     agent = AgentService(repository, provider, tools, settings)
     app = create_app(settings=settings, repository=repository, cache=cache, agent=agent)
     return TestClient(app)
-

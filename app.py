@@ -13,14 +13,48 @@ from ui_contract import API_PATHS, load_personas, select_persona
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 
 
+
 def request(method: str, path: str, token: str, **kwargs):
     headers = {"Authorization": f"Bearer {token}"}
-    response = httpx.request(method, f"{API_URL}{path}", headers=headers, timeout=40, **kwargs)
+
+    try:
+        response = httpx.request(
+            method,
+            f"{API_URL}{path}",
+            headers=headers,
+            timeout=40,
+            **kwargs,
+        )
+    except httpx.TimeoutException:
+        st.error("Permintaan ke API timeout. Silakan coba lagi.")
+        return None
+    except httpx.RequestError as exc:
+        st.error(f"Tidak dapat terhubung ke API: {exc}")
+        return None
+
+    try:
+        payload = response.json()
+    except ValueError:
+        payload = None
+
     if response.is_error:
-        detail = response.json().get("detail", response.text)
+        if isinstance(payload, dict):
+            detail = payload.get("detail", response.text)
+        else:
+            detail = response.text or "API mengembalikan respons kosong."
+
         st.error(f"API {response.status_code}: {detail}")
         return None
-    return response.json()
+
+    if payload is None:
+        st.error(
+            f"API {response.status_code} mengembalikan respons "
+            "yang bukan JSON."
+        )
+        return None
+
+    return payload
+
 
 
 st.set_page_config(page_title="Asisten HR Nusantara Digital", page_icon="🧭", layout="wide")
